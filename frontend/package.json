@@ -51,7 +51,7 @@
   "bugs": {
     "url": "https://github.com/EsraaNasr92/frontend/issues"
   },
-  "homepage": "https://github.com/EsraaNasr92/frontend#readme",
+  "homepage": ".",
   "devDependencies": {
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",

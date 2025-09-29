@@ -5,6 +5,8 @@ export const Home = () =>{
 
     const [chapters, setChapters] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedChapter, setSelectedChapter] = useState(null);
+    const [chapterLoading, setChapterLoading] = useState(false);
 
     useEffect(() => {
         axios.get("http://localhost:5000/chapters") // Call backend
@@ -17,6 +19,21 @@ export const Home = () =>{
             setLoading(false);
         });
     }, []);
+
+    // Fetch single chapter by ID
+    const fetchChapterDetails = (id) => {
+        setChapterLoading(true);
+        axios
+        .get(`http://localhost:5000/chapters/${id}?language=en`)
+        .then((res) => {
+            setSelectedChapter(res.data.chapter);
+            setChapterLoading(false);
+        })
+        .catch((err) => {
+            console.log(err);
+            setChapterLoading(false);
+        });
+    };
 
     if (loading){
         return <p className="text-center text-gray-500">Loading chapters…</p>
@@ -45,7 +62,8 @@ export const Home = () =>{
                     {chapters.map((ch) => (
                     <tr
                         key={ch.id}
-                        className="hover:bg-gray-50 transition-colors duration-150"
+                        className="hover:bg-gray-50 transition-colors duration-150 cursor-pointer"
+                        onClick={() => fetchChapterDetails(ch.id)}
                     >
                         <td className="px-4 py-2 border-b">{ch.id}</td>
                         <td className="px-4 py-2 border-b">{ch.name_simple}</td>
@@ -61,6 +79,35 @@ export const Home = () =>{
                 </tbody>
                 </table>
             </div>
-            </div>
+            {/* Selected chapter details */}
+            {chapterLoading && <p className="text-gray-500">Loading chapter details…</p>}
+            {selectedChapter && !chapterLoading && (
+                <div className="p-4 border rounded-lg shadow-sm bg-gray-50">
+                <h2 className="text-2xl font-bold mb-2">
+                    {selectedChapter.name_simple} ({selectedChapter.name_arabic})
+                </h2>
+                <p>
+                    <strong>Revelation Place:</strong> {selectedChapter.revelation_place}
+                </p>
+                <p>
+                    <strong>Revelation Order:</strong> {selectedChapter.revelation_order}
+                </p>
+                <p>
+                    <strong>Bismillah Pre:</strong> {selectedChapter.bismillah_pre ? "Yes" : "No"}
+                </p>
+                <p>
+                    <strong>Verses Count:</strong> {selectedChapter.verses_count}
+                </p>
+                <p>
+                    <strong>Pages:</strong>{" "}
+                    {selectedChapter.pages?.length ? selectedChapter.pages.join(", ") : "N/A"}
+                </p>
+                <p>
+                    <strong>Translated Name:</strong> {selectedChapter.translated_name?.name} (
+                    {selectedChapter.translated_name?.language_name})
+                </p>
+                </div>
+            )}
+        </div>
     )
 }

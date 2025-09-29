@@ -55,4 +55,52 @@ async function getChapters(accessToken, clientIdOverride) {
     }
 }
 
-module.exports = { getAccessToken, getChapters };
+
+async function getChapter(accessToken, chapterId, language = 'en') {
+    try {
+        const response = await axios.get(
+        `https://apis-prelive.quran.foundation/content/api/v4/chapters/${chapterId}`,
+        {
+            headers: {
+            'x-auth-token': accessToken,
+            'x-client-id': clientId
+            },
+            params: { language }
+        }
+        );
+        return response.data;
+    } catch (err) {
+        console.error('Error fetching chapter:', err.response?.data || err.message);
+        throw err;
+    }
+}
+
+
+async function searchQuran(query, accessToken, clientIdOverride) {
+    try {
+        const id = clientIdOverride || clientId;
+
+        const response = await axios.get(
+        "https://apis-prelive.quran.foundation/content/api/v4/search",
+        {
+            headers: {
+            "x-auth-token": accessToken,
+            "x-client-id": id,
+            },
+            params: {
+                q: query,
+                size: 10,
+                page: 1,
+                language: "en"
+            },
+        }
+        );
+
+        return response.data;
+    } catch (error) {
+        console.error("Error searching:", error.response?.data || error.message);
+        throw error;
+    }
+}
+
+module.exports = { getAccessToken, getChapters, searchQuran, getChapter };
