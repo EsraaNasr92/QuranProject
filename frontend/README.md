@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# Quran Verse Explorer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based web application to explore **Quran chapters and verses** dynamically, using a backend API built with **Node.js + Express**.
 
-## Available Scripts
+This app allows users to:
+- Browse all Quran chapters
+- View detailed chapter information
+- Mark chapters as **favorite** ⭐ (with local storage persistence)
+- Explore verses by chapter (coming soon)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Fetch Quran chapters from backend
+- View detailed information for each chapter
+- Add / Remove favorites (saved locally)
+- Modern UI using Tailwind CSS
+- Built with modular React components
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🧠 Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Area | Technology |
+|------|-------------|
+| Frontend | React |
+| Styling | Tailwind CSS |
+| HTTP Client | Axios |
+| Backend | Node.js + Express |
+| Data Source | Quran API Integration |
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Project Structure
+frontend/
+│
+├── src/
+│ ├── components/
+│ │ └── VersesByChapter.jsx # Fetch verses by chapter
+│ ├── pages/
+│ │ └── Home.jsx # Display chapters + favorite toggle
+│ ├── App.jsx # App entry point
+│ └── main.jsx # React DOM render
+│
+└── package.json
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## ⚙️ Setup Instructions
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 1️⃣ Backend Setup
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Make sure your backend (Node.js/Express) is running at: http://localhost:5000
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Endpoints:
+- `GET /chapters` → Returns list of Quran chapters
+- `GET /chapters/:id?language=en` → Returns specific chapter details
+- `GET /verses/by_chapter/:id` → Returns verses in that chapter
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Example test:
 
-## Learn More
+```bash
+curl http://localhost:5000/chapters
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Clone repository
+git clone https://github.com/YOUR_USERNAME/quran-verse-explorer.git
+cd quran-verse-explorer/frontend
 
-### Code Splitting
+# Install dependencies
+npm install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+# Run app
+npm start
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
