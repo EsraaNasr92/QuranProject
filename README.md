@@ -33,17 +33,37 @@ This app allows users to:
 ---
 
 ## Project Structure
-frontend/
+
+QURANPROJECT/
 │
-├── src/
-│ ├── components/
-│ │ └── VersesByChapter.jsx # Fetch verses by chapter
-│ ├── pages/
-│ │ └── Home.jsx # Display chapters + favorite toggle
-│ ├── App.jsx # App entry point
-│ └── main.jsx # React DOM render
+├── backend/
+│   ├── .env                     # Environment variables (API keys, tokens)
+│   ├── main.js                  # Main script to run backend logic
+│   ├── quranApi.js              # API handlers for Quran API
+│   ├── server.js                # Express server setup and routes
+│   ├── package.json             # Backend dependencies
 │
-└── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── NavBar.jsx       # Navigation bar component
+│   │   │   ├── SearchBar.jsx    # Search input for Quran verses
+│   │   │   └── VersesByChapter.jsx # Fetch & display verses by chapter
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── Home.jsx         # Display chapters + favorite toggle
+│   │   │   ├── Search.jsx       # Search results page
+│   │   │   ├── Login.jsx        # User login page
+│   │   │   └── FavoritePage.jsx # Display user's favorite verses
+│   │   │
+│   │   ├── App.jsx              # Root app component
+│   │   ├── index.js             # React entry point
+│   │   ├── App.css, index.css   # Styling files
+│   │   └── logo.svg             # Logo asset
+│   │
+│   ├── package.json             # Frontend dependencies
+│
+└── README.md                    # Project documentation
 
 
 ---
@@ -66,8 +86,8 @@ curl http://localhost:5000/chapters
 
 
 # Clone repository
-git clone https://github.com/YOUR_USERNAME/quran-verse-explorer.git
-cd quran-verse-explorer/frontend
+git clone https://github.com/YOUR_USERNAME/QuranProject.git
+cd  QuranProject/frontend
 
 # Install dependencies
 npm install
