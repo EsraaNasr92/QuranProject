@@ -65,8 +65,6 @@ QURANPROJECT/
 │
 └── README.md                    # Project documentation
 
-
-
 ---
 
 ## ⚙️ Setup Instructions
