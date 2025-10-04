@@ -6,8 +6,7 @@ import { NavBar } from './components/NavBar';
 import './index.css';
 import { FavoritePage } from './pages/FavoritePage';
 import { Home } from './pages/Home';
-import { Login } from './pages/Login';
-import { Search } from './pages/Search';
+import VersesByChapter from './pages/VersesByChapter';
 
 function App() {
 
@@ -29,22 +28,12 @@ function App() {
   return (
     
     <Router>
-      <NavBar onSearch={handleSearch}/>
+      <NavBar />
       <div className="content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/favorites" element={<FavoritePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="Search"
-            element={
-              <Search
-                results={results}
-                loading={loading}
-                error={error}
-                onSearch={handleSearch}
-              />
-            }/>
+          <Route path="/verses" element={<VersesByChapter />} />
         </Routes>
       </div>
     </Router>

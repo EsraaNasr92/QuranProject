@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { getAccessToken, getChapters, searchQuran, getChapter } = require("./quranApi");
+const { getAccessToken, getChapters, searchQuran, getChapter, getVersesByChapter } = require("./quranApi");
 
 const app = express();
 app.use(cors());
@@ -43,6 +43,15 @@ app.get("/search", async (req, res) => {
     }
 });
 
-
+app.get('/verses/by_chapter/:chapterNumber', async (req, res) => {
+    try {
+        const { chapterNumber } = req.params;
+        const tokenData = await getAccessToken();
+        const data = await getVersesByChapter(chapterNumber, tokenData.access_token);
+        res.json(data);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("Server running on http://localhost:5000"));

@@ -5,6 +5,7 @@ require('dotenv').config();
 const clientId = process.env.QURAN_CLIENT_ID;
 const clientSecret = process.env.QURAN_CLIENT_SECRET;
 
+// This function to get access token
 async function getAccessToken() {
     if (!clientId || !clientSecret) throw new Error('Missing QURAN_CLIENT_ID or QURAN_CLIENT_SECRET in .env');
 
@@ -36,6 +37,7 @@ async function getAccessToken() {
     }
 }
 
+// This function to Chapters
 async function getChapters(accessToken, clientIdOverride) {
     try {
         const id = clientIdOverride || clientId;
@@ -55,7 +57,7 @@ async function getChapters(accessToken, clientIdOverride) {
     }
 }
 
-
+// This function to Chapter details
 async function getChapter(accessToken, chapterId, language = 'en') {
     try {
         const response = await axios.get(
@@ -103,4 +105,28 @@ async function searchQuran(query, accessToken, clientIdOverride) {
     }
 }
 
-module.exports = { getAccessToken, getChapters, searchQuran, getChapter };
+async function getVersesByChapter(chapterNumber, accessToken) {
+    try {
+        const response = await axios.get(
+        `https://apis-prelive.quran.foundation/content/api/v4/verses/by_chapter/${chapterNumber}`,
+        {
+            headers: {
+                Accept: "application/json",
+                "x-auth-token": accessToken,
+                "x-client-id": clientId,
+            },
+            params: {
+            language: 'en',
+            words: true,
+            per_page: 10
+            }
+        }
+        );
+        return response.data;
+    } catch (err) {
+        console.error('Error fetching verses by chapter:', err.message);
+        throw err;
+    }
+}
+
+module.exports = { getAccessToken, getChapters, searchQuran, getChapter, getVersesByChapter };
