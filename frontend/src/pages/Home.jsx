@@ -7,6 +7,28 @@ export const Home = () =>{
     const [loading, setLoading] = useState(true);
     const [selectedChapter, setSelectedChapter] = useState(null);
     const [chapterLoading, setChapterLoading] = useState(false);
+    const [favorites, setFavorites] = useState(getFavorites());
+
+    // Add favorite feature
+    function getFavorites() {
+        const stored = localStorage.getItem("favorites");
+        return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveFavorites(favs) {
+        localStorage.setItem("favorites", JSON.stringify(favs));
+    }
+
+    function toggleFavorite(chapterId) {
+        let updatedFavorites;
+        if (favorites.includes(chapterId)) {
+        updatedFavorites = favorites.filter((id) => id !== chapterId);
+        } else {
+        updatedFavorites = [...favorites, chapterId];
+        }
+        setFavorites(updatedFavorites);
+        saveFavorites(updatedFavorites);
+    }
 
     useEffect(() => {
         axios.get("http://localhost:5000/chapters") // Call backend
@@ -72,7 +94,15 @@ export const Home = () =>{
                         </td>
                         <td className="px-4 py-2 border-b">{ch.verses_count}</td>
                         <td className="px-4 py-2 border-b capitalize">
-                        {ch.revelation_place}
+                            {ch.revelation_place}
+                        </td>
+                        <td className="px-4 py-2 border-b text-center">
+                            <button
+                                onClick={() => toggleFavorite(ch.id)}
+                                className="text-yellow-500 text-xl"
+                            >
+                                {favorites.includes(ch.id) ? "★" : "☆"}
+                            </button>
                         </td>
                     </tr>
                     ))}
